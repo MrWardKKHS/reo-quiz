@@ -46,7 +46,7 @@ def load_questions():
         word_dict[i] = Word(
             maori=maori.text, 
             english=english.text, 
-            breakdown=breakdown.text.replace('; ', "\n")
+            breakdown=breakdown.text.replace('; ', "  ||  ")
         )
     return word_dict
 

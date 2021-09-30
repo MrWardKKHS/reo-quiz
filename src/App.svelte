@@ -2,7 +2,7 @@
 	export async function preload(page, session) {
 	  const res = await fetch("http://localhost:8000")
 	  const data = await res.json();
-	  return {data: data}
+	  return data
 	}
 </script>
 
