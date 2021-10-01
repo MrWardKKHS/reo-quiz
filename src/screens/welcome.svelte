@@ -14,14 +14,12 @@
     })
     
 </script>
-    <h1>Te Reo Place Names</h1>
+<h1>Te Reo Place Names</h1>
 
-    <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing 
-    </p>
-<p>Placeat, aliquid?</p>
-
-<p>Pick a category to play a game</p>
+<p>How well do you know your own backyard?</p>
+<p>Take the quiz to find out</p>
+<br>
+<!-- <p>Pick a category to play a game</p> -->
 
 <div class="categories">
 <!-- using categories to make this modular over time -->
@@ -30,7 +28,12 @@
     {/each}
 
 </div>
-
+<br>
+<br>
+<footer>
+   <p>translations from <a href="https://nzhistory.govt.nz/culture/maori-language-week/1000-maori-place-names">NZ History</a></p>
+   <p>Made by <a href="https://www.youtube.com/channel/UCHm5sxfqw5Oq2mbiYH1kgzw">Mr Ward</a></p>
+</footer>
 
 <style>
    h1 {
@@ -40,17 +43,6 @@
         font-weight: 100;
         margin: 0 0 0.5em 0;
     }
-    
-    /* .logo {
-        display: inline-block;
-        background: url(/icons/compare.svg) 50% 50% no-repeat;
-        background-size: 100% 100%;
-        width: 0.8em;
-        top: 0.05em;
-        transform: scale(1.4);
-        left: 0.02em;
-        text-indent: -9999px;
-    } */
 
     p {
         max-width: 24em;
@@ -68,6 +60,12 @@
         display: block;
         margin: 0 0 0.2em 0;
         width: 100%;
+    }
+
+    footer {
+        margin: 0 auto;
+        color:dimgray;
+        opacity: 80%;
     }
 
     @media (min-width: 640px) {

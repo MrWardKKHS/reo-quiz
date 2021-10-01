@@ -1,6 +1,6 @@
 <script context="module">
 	export async function preload(page, session) {
-	  const res = await fetch("http://localhost:8000")
+	  const res = await fetch("https://bmvw2i.deta.dev/")
 	  const data = await res.json();
 	  return data
 	}
@@ -8,27 +8,18 @@
 
 
 <script>
-import { onMount } from "svelte";
-
 	import Welcome from "./screens/welcome.svelte"
 	import Game from "./screens/game.svelte"
-	// export let name;
 	let data
 	let state = 'welcome'
-	let selection 
 	const start = async (e) => {
 		data = await preload()
-		// selection = select(celebs, lookup, e.detail.category.slug)
 		state = 'playing'
 	}
 
 	const load_questions = async () => {
 		data = await preload()
 	}
-
-	// onMount(() => {
-	// 	load_questions()
-	// })
 
 </script>
 
