@@ -20,7 +20,8 @@ a {
 }
 
 a:hover {
-	text-decoration: underline;
+	text-decoration: none;
+	color: rgb(55, 155, 255)
 }
 
 a:visited {

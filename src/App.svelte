@@ -1,10 +1,22 @@
 <script context="module">
-	import { pick_random, shuffle } from "./utils";
+	import { make_questions } from "./utils";
 
-	export async function preload(page, session) {
-	  const res = await fetch("https://bmvw2i.deta.dev/")
-	  const data = await res.json();
-	  return data
+	export async function preload() {
+		const res = await fetch("placenames.txt")
+		const text = await res.text()
+
+		const lines = text.split("\n")
+		const kupu = lines.map(line => {
+		const [english, maori, breakdown] = line.split("; ")
+		return {
+			maori,
+			english,
+			breakdown
+		}
+		})
+
+		const questions = make_questions(kupu)
+		return questions
 	}
 
 	const get_kupu = async function () {
@@ -19,26 +31,7 @@
 			let parts = line.split(";")
 			kupu.push(parts)
 		}
-
-		let questions = []
-		for (let i = 0; i < 10; i++) {
-			let question = {
-				all: [],
-				correct: []
-			}
-			let choice = pick_random(kupu)
-			question.correct = choice
-			question.all.push(choice)
-			for (let i = 0; i < 3; i++){
-				let incorrect = pick_random(kupu)
-				while (incorrect === question.correct || question.all.includes(incorrect)) {
-					incorrect = pick_random(kupu)
-				}
-				question.all.push(incorrect)
-			}
-			question.all = shuffle(question.all)
-			questions.push(question)
-		}
+		const questions = make_questions(kupu)
 		return questions
 	}
 </script>

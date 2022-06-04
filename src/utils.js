@@ -25,3 +25,26 @@ export function load_image(src){
 		img.src = src
 	})
 }
+
+export function make_questions(wordList, length=10){
+	let questions = []
+		for (let i = 0; i < length; i++) {
+			let question = {
+				all: [],
+				correct: []
+			}
+			let choice = pick_random(wordList)
+			question.correct = choice
+			question.all.push(choice)
+			for (let i = 0; i < 3; i++){
+				let incorrect = pick_random(wordList)
+				while (question.all.includes(incorrect)) {
+					incorrect = pick_random(wordList)
+				}
+				question.all.push(incorrect)
+			}
+			question.all = shuffle(question.all)
+			questions.push(question)
+		}
+		return questions
+}

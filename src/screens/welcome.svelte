@@ -62,6 +62,7 @@
         color:dimgray;
         opacity: 80%;
     }
+
     @media (min-width: 640px) {
         button {
             display: inline;

@@ -12,7 +12,7 @@
     const results = Array(data.length)
     const dispatch = createEventDispatcher()
     $: score = results.filter(x => x=== 'right').length
-    $: options = data[i].all_questions
+    $: options = data[i].all
     $: correct = data[i].correct
     $: headingText = data[i].correct.maori
 
