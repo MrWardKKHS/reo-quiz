@@ -18,7 +18,6 @@
 <p>A Thousand Words</p>
 <p>Practice the thousand most common words in Te Reo</p>
 <br>
-<!-- <p>Pick a category to play a game</p> -->
 
 <div class="categories">
 <!-- using categories to make this modular over time -->
