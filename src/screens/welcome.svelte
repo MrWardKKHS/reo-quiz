@@ -1,9 +1,9 @@
 <script>
     import { createEventDispatcher } from 'svelte'
     const categories = [
-        { slug: "maori", label: "Maori"},
-        { slug: "english", label: "English"},
-        { slug: "placenames", label: "Place Names"},
+        { slug: "maori", label: "Maori", filename: "kupu.txt", prompt_language: 'maori'},
+        { slug: "english", label: "English", filename: "kupu.txt", prompt_language: 'english'},
+        { slug: "placenames", label: "Place Names", filename: "placenames.txt", prompt_language: 'maori'},
     ]
     const dispatch = createEventDispatcher()
     let selected = false
@@ -11,8 +11,8 @@
         selected = true
         dispatch('select', { category })
     })
-    
 </script>
+
 <h1>Kotahi Mano Kupu</h1>
 
 <p>A Thousand Words</p>

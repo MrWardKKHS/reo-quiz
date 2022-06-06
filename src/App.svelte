@@ -1,57 +1,36 @@
-<script context="module">
-	import { make_questions } from "./utils";
 
-	export async function preload() {
-		const res = await fetch("placenames.txt")
-		const text = await res.text()
 
-		const lines = text.split("\n")
-		const kupu = lines.map(line => {
-		const [english, maori, breakdown] = line.split("; ")
-		return {
-			maori,
-			english,
-			breakdown
-		}
-		})
-
-		const questions = make_questions(kupu)
-		return questions
-	}
-
-	const get_kupu = async function () {
-		// get the words from file, split in to word-definition pairs
-		// clean data and choose 1 correct word and 3 incorect choices per question
-		const res = await fetch('kupu.txt')
-		const txt = await res.text()
-		let lines = txt.split("\n")
-		let kupu = []
-		for (let line of lines){
-			line = line.replace('\r', '')
-			let parts = line.split(";")
-			kupu.push(parts)
-		}
-		const questions = make_questions(kupu)
-		return questions
-	}
-</script>
 
 
 <script>
 	import Welcome from "./screens/welcome.svelte"
-	import Kotahi from "./screens/kotahi.svelte"
 	import Game from "./screens/game.svelte"
-	let data
+	import Loader from "./screens/loader.svelte"
+	import { make_questions } from "./utils";
+
+	export async function preload(filename, prompt_language='maori') {
+		const res = await fetch(filename);
+		const text = await res.text();
+		const swap_prompt = prompt_language === 'english';
+		const lines = text.split("\n");
+		const kupu = lines.map(line => {
+			const [maori, english, breakdown] = line.split("; ")
+				return {
+					prompt: swap_prompt? english : maori,
+					answer: swap_prompt? maori : english,
+					breakdown
+				}
+			})
+	
+		return make_questions(kupu)
+	}
+
 	let state = 'welcome'
-	let category 
+	let data
 	const start = async (e) => {
 		state = 'loading'
-		category = e.detail.category.slug
-		if (category === 'placenames'){
-			data = await preload()
-		} else {
-			data = await get_kupu()
-		}
+		data = await preload(e.detail.category.filename, e.detail.category.prompt_language)
+		console.log(data)
 		state = 'playing'
 	}
 </script>
@@ -60,17 +39,9 @@
 	{#if state =="welcome"}
 		<Welcome on:select={start}/>
 	{:else if state =="loading"}
-		<div class="loader">
-			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; display: block; shape-rendering: auto;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-				<circle cx="50" cy="50" r="32" stroke-width="8" stroke="#df1317" stroke-dasharray="50.26548245743669 50.26548245743669" fill="none" stroke-linecap="round">
-					<!-- <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" keyTimes="0;1" values="0 50 50;360 50 50"></animateTransform> -->
-				</circle>
-			</svg>
-		</div>
-	{:else if state =='playing' && category === 'placenames'}
-		<Game {data} on:restart={() => state = 'welcome'}/>
+		<Loader/>
 	{:else if state =='playing'}
-		<Kotahi {data} {category} on:restart={() => state = 'welcome'}/>
+		<Game {data} on:restart={() => state = 'welcome'}/>
 	{/if}
 </main>
 
@@ -90,26 +61,6 @@
 			max-width: none;
 		}
 	}
-	.loader {
-        position: fixed;
-        top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-        display: grid;
-        place-items: center;
-		animation-name: ckw;
-		animation-duration: 1s;
-		animation-iteration-count: infinite;
-    }
-@keyframes ckw {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
 
 
 </style>

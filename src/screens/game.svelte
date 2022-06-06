@@ -14,7 +14,7 @@
     $: score = results.filter(x => x=== 'right').length
     $: options = data[i].all
     $: correct = data[i].correct
-    $: headingText = data[i].correct.maori
+    $: headingText = data[i].correct.prompt
 
     onMount(() => {
         pageIsLoaded = true
@@ -32,7 +32,7 @@
     }
 
     const submit = async (choice) => {
-        last_result = correct.english === choice
+        last_result = correct.answer === choice
             ? 'right'
             : 'wrong';
 
@@ -65,7 +65,7 @@
     {:else if ready}
         <header>
             <p style="opacity: 50%;">Tap on the correct translation</p>
-            <h2 class="reo">{correct.maori}</h2>
+            <h2 class="reo">{correct.prompt}</h2>
         </header>
         <div class="game"
             in:fly={{duration: 200, y:20}}
@@ -75,7 +75,7 @@
         >  
             <div class='answer-container'>
                 {#each options as option}
-                <button class='answer' on:click={() => submit(option.english)}>{option.english}</button>
+                <button class='answer' on:click={() => submit(option.answer)}>{option.answer}</button>
                 {/each}
             </div>
         </div>
@@ -83,7 +83,13 @@
         <div class="breakdown-container">          
             {#if !!last_result}
                 <h3 in:fly={{duration: 200, y:-20}}
-                out:fly={{duration: 200, y:20}}>{correct.breakdown}</h3>
+                out:fly={{duration: 200, y:20}}>
+                    {#if !correct.breakdown}
+                        {correct.prompt}: {correct.answer}
+                    {:else}
+                        {correct.breakdown}
+                    {/if}
+                </h3>
             {:else}
             <h3>&nbsp;</h3>
             {/if}
