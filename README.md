@@ -13,3 +13,5 @@ The translations were initially scraped with Beautiful Soup and served through a
 The app was extended to include the Maori to English translations of the Thousand most common Maori words.
 
 To include more words, fork this repository and edit kupu.txt and placenames.txt
+
+[link to the site](https://reo-place-names-quiz.web.app/)
